@@ -3,6 +3,17 @@
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.0-beta.31.
 Using 'ng new angular-cli-scss -style=scss'
 
+
+It has working typescript translation, minification and g-zip as well as support for scss. And also, generates service-worker for offline use.
+
+Currently using Lighthouse ('https://developers.google.com/web/tools/lighthouse/') it receives a score of 52 our of 100.
+
+What to do (se '/lighthouse_report.html'):
+- Use HTTPS/2 instead of HTTP
+- Create Manifest
+- Avoids <link> that delay first paint (/styles.d41d8cd….bundle.css)
+
+
 ## Development server
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
