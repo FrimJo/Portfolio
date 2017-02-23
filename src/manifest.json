@@ -1,0 +1,29 @@
+{
+  "manifest_version": 1,
+  "version": "1.0.0",
+  "name": "Angular 2 Boilerplate",
+  "short_name": "Boilerplate",
+  "description": "A biolerplate for Angular 2 projects.",
+  "default_locale": "se",
+  "icons": [
+    {
+      "src": "/assets/icons/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/icons/android-chrome-256x256.png",
+      "sizes": "256x256",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/icons/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#121738",
+  "theme_color": "#d17c78"
+}
