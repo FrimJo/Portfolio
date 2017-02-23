@@ -6,11 +6,10 @@ Using 'ng new angular-cli-scss -style=scss'
 
 It has working typescript translation, minification and g-zip as well as support for scss. And also, generates service-worker for offline use.
 
-Currently using Lighthouse ('https://developers.google.com/web/tools/lighthouse/') it receives a score of 52 our of 100.
+Currently using Lighthouse ('https://developers.google.com/web/tools/lighthouse/') it receives a score of 82 our of 100.
 
 What to do (se '/lighthouse_report.html'):
 - Use HTTPS/2 instead of HTTP
-- Create Manifest
 - Avoids <link> that delay first paint (/styles.d41d8cd….bundle.css)
 
 
