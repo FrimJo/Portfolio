@@ -1,1 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
+
+// More specific selectors == bad
+/*.header .nav .menu .link .anavItem {
+  font-size: 18px;
+}
+
+// Less specific selectors == good
+.anavItem {
+  font-size: 18px;
+}*/
+
+// Only deliver what you need
