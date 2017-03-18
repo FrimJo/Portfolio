@@ -1,0 +1,30 @@
+$information-phone: "only screen and (min-device-width: 375px) and (max-device-width: 667px) and (-webkit-min-device-pixel-ratio: 2)";
+
+.intro-text {
+  font-family: "Open Sans", serif;
+  font-size: 14px;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 100;
+  text-align: center;
+  color: white;
+  width: 70%;
+  white-space: normal;
+  margin: 0 auto;
+  margin-bottom: 29px;
+}
+
+.accessory {
+  width: 100%;
+  position: relative;
+  transform: translate(0, 0);
+  transition-timing-function: ease-out;
+  transition: transform 800ms, opacity 2s;
+  opacity: 1;
+
+  &.hide {
+    transform: translate(0, 110%);
+    opacity: 0;
+  }
+
+}

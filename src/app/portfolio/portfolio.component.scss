@@ -1,0 +1,192 @@
+
+$information-phone: "only screen and (min-device-width: 375px) and (max-device-width: 667px) and (-webkit-min-device-pixel-ratio: 2)";
+
+.wrapper {
+
+}
+
+.title {
+  font-family: ShadowsIntoLight, serif;
+  font-size: 42px;
+  text-transform: uppercase;
+  color: white;
+  text-align: center;
+  padding-top: 17px;
+}
+
+.sub-title {
+  font-family: 'Roboto-Thin', sans-serif;
+  font-weight: 100;
+  font-size: 18px;
+  letter-spacing: 14px;
+  text-transform: uppercase;
+  color: white;
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.nav {
+  display: inline-block;
+  height: 435px;
+  width: 100%;
+  background-color: #BE6E6E; /* For browsers that do not support gradients */
+  background-image: url(../../assets/images/f-logo-red.min.svg);
+  background-image: url(../../assets/images/f-logo-red.min.svg), radial-gradient(circle at 10% 25%, #BE7676, #BE6E6E);
+  background-repeat: no-repeat;
+  background-position-x: -321px;
+  background-position-y: -29px;
+  background-size: 100% 121%;
+  border-radius: 10px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+
+  @media #{$information-phone} {
+    height: calc(100vh - 130px);
+    border-radius: 0;
+    background-position-x: 50%;
+    background-position-y: 0;
+    background-size: 100% 145%;
+  }
+
+  .name {
+    font-family: SnellRoundhand-Regular, serif;
+    font-size: 58px;
+    line-height: 73px;
+    margin-top: 12px;
+    margin-right: 50px;
+    margin-bottom: 34px;
+    color: white;
+    text-align: right;
+
+    @media #{$information-phone} {
+      text-align: left;
+      margin-left: 20px;
+    }
+  }
+
+  .quote {
+    font-family: "Open Sans", sans-serif;
+    font-size: 18px;
+    font-style: italic;
+    font-variant: normal;
+    font-weight: 400;
+    text-align: right;
+    color: white;
+    width: 200px;
+    margin: 0 0 0 auto;
+    padding-right: 50px;
+  }
+}
+
+.portfolio-container {
+  display: flex;
+  align-items: center;
+  flex-flow: column wrap;
+  align-content: space-between;
+  justify-content: flex-start;
+  height: 1500px;
+
+  @media #{$information-phone} {
+    flex-wrap: nowrap;
+    height: auto;
+    width: auto;
+
+  }
+
+  .card {
+    position: relative;
+    //overflow: hidden;
+    list-style-type: none;
+    border-radius: 10px;
+    top: 0;
+    width: 435px;
+    max-width: 888px;
+    margin-top: 17px;
+    //box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    //transition: all 0.3s ease-in-out;
+
+    &:hover {
+      will-change: height, top;
+    }
+
+    @media #{$information-phone} {
+      border-radius: 0;
+      margin-top: 0;
+      width: 100%;
+
+      &.transition {
+        transition-timing-function: ease-in-out;
+        transition: height 800ms, top 800ms;
+      }
+
+      &.shadow {
+        box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+      }
+    }
+
+    &:nth-of-type(1) {
+      background: #191919;
+      background: radial-gradient(circle at 50% 0%, #3B3B3B, #191919);
+
+    }
+
+    &:nth-of-type(2) {
+      background: #0451A4;
+      background: radial-gradient(circle at 100% 0%, #60AFFF, #0451A4);
+    }
+
+    &:nth-of-type(3) {
+      background: #429321;
+      background: radial-gradient(circle at 0% 30%, #7BAA28, #429321);
+
+    }
+
+    &:nth-of-type(4) {
+      background: #759EAB;
+      background: radial-gradient(circle at 60% 10%, #8DC0C5, #759EAB);
+    }
+
+    &:nth-of-type(5) {
+      background: #673296;
+      background: radial-gradient(circle at 100% 15%, #7D76BA, #673296);
+    }
+
+    .arrow-container {
+      position: absolute;
+      margin-top: -20px;
+      width: 40px;
+      height: 40px;
+      top: 50%;
+      opacity: 0;
+      border-radius: 50%;
+      background: rgba(127, 127, 127, 0.3);
+      transition: opacity 300ms;
+
+      @media #{$information-phone} {
+        position: fixed;
+        display: none;
+      }
+
+      &.left {
+        left: 10px;
+
+        .arrow {
+          margin-right: -6px;
+          border-width: 2px 0px 0px 2px;
+          transform: rotate(-45deg) scale(2);
+        }
+      }
+
+      &.right {
+        right: 10px;
+
+        .arrow {
+          margin-left: -6px;
+          border-width: 2px 2px 0px 0px;
+          transform: rotate(45deg) scale(2);
+        }
+      }
+    }
+  }
+}
+
+

@@ -52,6 +52,6 @@
     "pree2e": "webdriver-manager update",
     "e2e": "protractor",
     "sw": "sw-precache --root=dist --config=sw-precache-config.js",
-    "static-serve": "cd dist && live-server --port=4300 --host=localhost --entry-file=/index.html"
+    "static-serve": "cd dist && live-server --port=4300 --host=192.168.1.187 --entry-file=/index.html"
   }
 }

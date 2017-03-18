@@ -1,0 +1,27 @@
+<div class="carousel-container" [style.transform]="transform">
+   <app-carousel-item class="item" #carouselItemChild *ngFor="let carouselItemData of carouselItemsData; let first = first;"
+    [imageSrc]=carouselItemData.imageSrc
+    [imageAlt]=carouselItemData.imageAlt
+    [text]=carouselItemData.text
+    [first]=first
+    [onScreen]="showImage"
+    [style.opacity]="carouselItemChild.getOpacity()"></app-carousel-item>
+</div>
+<div
+  class="arrow-container left"
+  #leftArrow
+  (click)="onLeftArrowClick()"
+  [style.opacity]="showLeftArrow"><i class="arrow"></i></div>
+<div
+  class="arrow-container right"
+  #rightArrow
+  (click)="onRightArrowClick()"
+  [style.opacity]="showRightArrow"><i class="arrow"></i></div>
+
+
+
+<!--
+
+
+
+-->

@@ -1,0 +1,14 @@
+ <img
+    class="logo"
+    src="{{logoSrc}}"
+    alt="{{logoAlt}}">
+  <div class="title">{{title}}</div>
+  <app-carousel #carousel
+                [showImage]=isVisible()
+                class="carousel"
+                [carouselItemsData]=carouselItemsData></app-carousel>
+ <div class="close-container" (click)="close.emit(null)" [style.opacity]="isOpen()? 1 : 0">
+   <div></div>
+   <div></div>
+ </div>
+<div class="shadow" [style.opacity]="shadowOpacity"></div>

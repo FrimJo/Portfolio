@@ -1,0 +1,7 @@
+<div class="intro-text">{{text}}</div>
+<img [ngClass]="{hide: shouldHide()}"
+     (load)="onImageLoad()"
+     class="accessory"
+     src="{{imageSrc}}"
+     alt="{{imageAlt}}">
+

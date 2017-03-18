@@ -1,0 +1,30 @@
+<div class="title">{{contentData.title}}</div>
+<div class="sub-title">{{contentData.subtitle}}</div>
+<div class="nav">
+  <div class="name">{{contentData.name}}</div>
+  <div class="quote">{{contentData.quote}}</div>
+</div>
+<ul class="portfolio-container">
+    <app-portfolio-item class="card" #portfolioChild *ngFor="let portfolioItemData of contentData.portfolioData;"
+                        (click)="openCard(portfolioChild)"
+                        (mouseover)="onMouseOver(portfolioChild)"
+                        (mouseout)="onMouseOut(portfolioChild)"
+                        (transitionend)="transitionEnd($event)"
+                        (close)="closeCard(portfolioChild)"
+                        [title]=portfolioItemData.title
+                        [logoSrc]=portfolioItemData.logoSrc
+                        [logoAlt]=portfolioItemData.logoAlt
+                        [carouselItemsData]=portfolioItemData.carouselItemsData></app-portfolio-item>
+</ul>
+
+<!--
+
+
+(transitionend)="transitionEnd($event)"
+[style.position]="portfolioItem.positionStyle"
+                        [style.zIndex]="portfolioItem.zIndexStyle"
+                        [style.top]="portfolioItem.topStyle"
+(@fullScreen.start)="animationStarted($event)"
+                        (@fullScreen.done)="animationDone(portfolioItem)"
+                        [@fullScreen]="portfolioItem.fullScreen"
+-->

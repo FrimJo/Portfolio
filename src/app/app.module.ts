@@ -4,10 +4,18 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
+import { PortfolioComponent } from './portfolio/portfolio.component';
+import { CarouselComponent } from './portfolio/portfolio-item/carousel/carousel.component';
+import { CarouselItemComponent } from './portfolio/portfolio-item/carousel/carousel-item/carousel-item.component';
+import { PortfolioItemComponent } from './portfolio/portfolio-item/portfolio-item.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    PortfolioComponent,
+    CarouselComponent,
+    CarouselItemComponent,
+    PortfolioItemComponent
   ],
   imports: [
     BrowserModule,
