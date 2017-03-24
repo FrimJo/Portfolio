@@ -4,11 +4,14 @@
   "license": "MIT",
   "angular-cli": {},
   "scripts": {
-    "ng": "ng",
+    "prod": "ng build -prod && npm run sw",
     "start": "ng serve",
+    "lint": "tslint \"src/**/*.ts\"",
     "test": "ng test",
-    "lint": "ng lint",
-    "e2e": "ng e2e"
+    "pree2e": "webdriver-manager update",
+    "e2e": "protractor",
+    "sw": "sw-precache --root=dist --config=sw-precache-config.js",
+    "static-serve": "cd dist && live-server --port=4300 --host=192.168.1.187 --entry-file=/index.html"
   },
   "private": true,
   "dependencies": {
@@ -43,15 +46,5 @@
     "ts-node": "1.2.1",
     "tslint": "^4.3.0",
     "typescript": "~2.0.0"
-  },
-  "scripts": {
-    "prod": "ng build -prod && npm run sw",
-    "start": "ng serve",
-    "lint": "tslint \"src/**/*.ts\"",
-    "test": "ng test",
-    "pree2e": "webdriver-manager update",
-    "e2e": "protractor",
-    "sw": "sw-precache --root=dist --config=sw-precache-config.js",
-    "static-serve": "cd dist && live-server --port=4300 --host=192.168.1.187 --entry-file=/index.html"
   }
 }

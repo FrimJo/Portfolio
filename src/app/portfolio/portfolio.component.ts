@@ -15,8 +15,13 @@ const CONTENTDATA: Object = {
     logoSrc: '../../assets/images/logo-empty-grey.min.svg',
     logoAlt: '',
     carouselItemsData:[
-      { imageSrc: '../../assets/images/united_colors-pixel-black.min.png', imageAlt: '1A', text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempo'},
-      { imageSrc: '../../assets/images/united_colors-pixel-black.min.png', imageAlt: '2A', text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempo'}
+      { imageSrc: '../../assets/images/united-colors-play-store.min.png', imageAlt: '1A', text: 'Top-down colorful android arcade game. Unite dots of same color, avoid the rest.'},
+      { imageSrc: '../../assets/images/united-colors-in-game.min.png', imageAlt: '2A',
+        text: `With the use of a phones gyroscope, the player moves a big dot,
+        trying to collide and consume smaller dots of same color for point\'s,
+        and at the same time avoid colliding with dots of other colors, which would result in game over.
+        This project was built by Fredrik over a period of two months, it involved Android Java programming, 
+        Google Play leaderboards, as well as Open GL ES graphic programming for rendering the game.` }
     ]
   },
   {

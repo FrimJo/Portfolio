@@ -10,6 +10,7 @@ import {CarouselItemComponent} from "./carousel-item/carousel-item.component";
   styleUrls: ['carousel.component.scss']
 })
 export class CarouselComponent implements OnInit {
+
   // Get first carousel item child
   @ViewChildren('carouselItemChild') carouselChildren:QueryList<CarouselItemComponent>;
   @ViewChild('carouselItemChild') firstCarouselItem:CarouselItemComponent;
@@ -29,7 +30,7 @@ export class CarouselComponent implements OnInit {
   private set index(value:number){
 
     // Make sure the new index can never be lower the zero and bigger then number of carousel items
-    this._index = value < 0? 0 : value > this.carouselChildren.length-1? this.carouselChildren.length : value;
+    this._index = value < 0? 0 : value > this.carouselChildren.length-1? this.carouselChildren.length-1 : value;
   }
 
   private get index(){ return this._index; }
@@ -40,7 +41,7 @@ export class CarouselComponent implements OnInit {
     return 'translate(-' + this.width * this.index + 'px, 0)';
   }
 
-  constructor(private elementRef:ElementRef) {}
+  constructor() {}
 
   ngOnInit() {}
 
@@ -81,5 +82,17 @@ export class CarouselComponent implements OnInit {
     // Show new item
     let newItem = this.carouselChildren.find( (item, index) => { return index == this.index; });
     newItem.show();
+  }
+
+  private isToFill(index:number): boolean {
+    return index == this._index;
+  }
+
+  private onCircleClick(index:number): void {
+    this.index = index;
+  }
+
+  private getOpacity(index:number): number {
+    return index == this._index? 1 : 0;
   }
 }

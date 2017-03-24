@@ -1,5 +1,7 @@
-<div class="intro-text">{{text}}</div>
+<div class="intro-text"
+     [style.textAlign]="textAlign">{{text}}</div>
 <img [ngClass]="{hide: shouldHide()}"
+     [style.display]="hasImage()"
      (load)="onImageLoad()"
      class="accessory"
      src="{{imageSrc}}"

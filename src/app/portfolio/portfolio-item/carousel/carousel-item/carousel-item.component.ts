@@ -15,6 +15,7 @@ export class CarouselItemComponent implements OnInit {
   @Input() private text:string;
   @Input() private first:boolean;
   @Input() private get onScreen() { return this._onScreen; }
+  @Input() private textAlign:string;
 
   private set onScreen(value:boolean) {
 
@@ -54,6 +55,7 @@ export class CarouselItemComponent implements OnInit {
    * not shown for the user, it should be hidden.
    */
   private shouldHide():boolean { return (this.first && !this.onScreen); }
+  private hasImage():string { return this.imageSrc === ''? 'none' : ''; }
 
   public getOpacity(){ return this._opacity; }
   public hide(){ this._opacity = 0; }

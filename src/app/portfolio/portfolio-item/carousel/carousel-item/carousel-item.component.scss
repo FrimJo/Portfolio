@@ -12,11 +12,13 @@ $information-phone: "only screen and (min-device-width: 375px) and (max-device-w
   white-space: normal;
   margin: 0 auto;
   margin-bottom: 29px;
+  word-wrap: break-word;
 }
 
 .accessory {
-  width: 100%;
-  position: relative;
+  width: 90%;
+  margin: 0 auto;
+  display: block;
   transform: translate(0, 0);
   transition-timing-function: ease-out;
   transition: transform 800ms, opacity 2s;
