@@ -3,9 +3,8 @@ import {
 } from '@angular/core';
 import {CarouselComponent} from "./carousel/carousel.component";
 import {PortfolioComponent} from "../portfolio.component";
-import {Observable, Observer, Subject} from "rxjs";
-import {isBoolean} from "util";
-//import { routerTransition } from './router.animations';
+import {Subject} from "rxjs";
+
 
 @Component({
   selector: 'app-portfolio-item',
