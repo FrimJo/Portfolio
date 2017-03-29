@@ -7,7 +7,7 @@ const routes = [
   { path: 'varramie', data: {title: 'Varramie'}, component: PortfolioComponent },
   { path: 'upload', data: {title: 'UpLoad'}, component: PortfolioComponent },
   { path: 'room-booking', data: {title: 'Room Booking'}, component: PortfolioComponent },
-  { path: 'holocare', data: {title: 'HoloCare'}, component: PortfolioComponent },
+  { path: 'holocare', data: {title: 'HoloCare'} ,component: PortfolioComponent },
   { path: '**', redirectTo: 'home' }
 ];
 
