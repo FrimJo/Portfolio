@@ -4,6 +4,7 @@ import {
 } from '@angular/core';
 import {PortfolioItemComponent} from "./portfolio-item/portfolio-item.component";
 import {setTimeout} from "timers";
+import {Router, ActivatedRoute} from "@angular/router";
 import 'rxjs/add/operator/switchMap';
 import {PortfolioService} from "./portfolio.service";
 
@@ -90,7 +91,7 @@ export class PortfolioComponent implements OnInit {
 
   private transitionEnd:(TransitionEvent, boolean)=>void = (event:TransitionEvent, force:boolean)=> {};
 
-  constructor(/*private route: ActivatedRoute, private router: Router,*/ private portfolioService:PortfolioService) { }
+  constructor(private route: ActivatedRoute, private router: Router, private portfolioService:PortfolioService) { }
 
   ngOnInit() {}
 
@@ -99,7 +100,7 @@ export class PortfolioComponent implements OnInit {
     // Init scroll position
     this.scrollPosition = window.pageYOffset;
 
-    /*let title = this.route.snapshot.data['title'];
+    let title = this.route.snapshot.data['title'];
 
     // If there is a title, we open a new portfolio item
     if(title) {
@@ -138,10 +139,10 @@ export class PortfolioComponent implements OnInit {
 
         }, true);
       }
-    }*/
+    }
   }
 
-  /*private cardClick(component:PortfolioItemComponent){
+  private cardClick(component:PortfolioItemComponent){
 
     let url = component.title.toLowerCase().replace(' ', '-');
     this.router.navigate(['/' + url]);
@@ -149,7 +150,7 @@ export class PortfolioComponent implements OnInit {
 
   private closeClick(component:PortfolioItemComponent){
     this.router.navigate(['/home']);
-  }*/
+  }
 
   private toggelCard(component:PortfolioItemComponent) {
 

@@ -8,6 +8,7 @@ import { PortfolioComponent } from './portfolio/portfolio.component';
 import { CarouselComponent } from './portfolio/portfolio-item/carousel/carousel.component';
 import { CarouselItemComponent } from './portfolio/portfolio-item/carousel/carousel-item/carousel-item.component';
 import { PortfolioItemComponent } from './portfolio/portfolio-item/portfolio-item.component';
+import { AppRouting } from "./app.routing";
 import { PortfolioService } from "./portfolio/portfolio.service";
 
 
@@ -22,7 +23,8 @@ import { PortfolioService } from "./portfolio/portfolio.service";
   imports: [
     BrowserModule,
     FormsModule,
-    HttpModule
+    HttpModule,
+    AppRouting
   ],
   providers: [
     PortfolioService

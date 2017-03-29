@@ -7,11 +7,11 @@
 <div class="main-container">
   <ul class="portfolio-container">
       <app-portfolio-item class="card" #portfolioChild *ngFor="let portfolioItemData of contentData.portfolioData;"
-                          (click)="openCard(portfolioChild)"
+                          (click)="cardClick(portfolioChild)"
                           (mouseover)="onMouseOver(portfolioChild)"
                           (mouseout)="onMouseOut(portfolioChild)"
                           (transitionend)="transitionEnd($event)"
-                          (close)="closeCard(portfolioChild)"
+                          (close)="closeClick(portfolioChild)"
                           [title]=portfolioItemData.title
                           [logoSrc]=portfolioItemData.logoSrc
                           [logoAlt]=portfolioItemData.logoAlt
