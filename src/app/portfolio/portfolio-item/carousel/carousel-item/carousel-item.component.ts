@@ -1,4 +1,4 @@
-import {Component, OnInit, Input, ViewChild, ElementRef} from '@angular/core';
+import {Component, OnInit, Input, ElementRef, Output, EventEmitter} from '@angular/core';
 
 
 @Component({
@@ -17,6 +17,10 @@ export class CarouselItemComponent implements OnInit {
   @Input() private get onScreen() { return this._onScreen; }
   @Input() private textAlign:string;
 
+
+
+  private preloaded = false;
+
   private set onScreen(value:boolean) {
 
     // If the image is not ready, save variable to be applied on ready
@@ -26,7 +30,19 @@ export class CarouselItemComponent implements OnInit {
     else if(!this._onScreen) this._onScreen = value;
   }
 
+  @Output() onReady: EventEmitter<boolean> = new EventEmitter();
   private _ready = false;
+
+  private set ready(value:boolean){
+    this._ready = value;
+
+    // If component is ready
+    if(this._ready) this.onReady.emit(null);
+  }
+  private get ready(){
+    return this._ready;
+  }
+
   private _onScreen = true;
   private _temp:boolean;
   private _opacity = 0;
@@ -39,8 +55,10 @@ export class CarouselItemComponent implements OnInit {
 
   onImageLoad(){
 
+    this.preloaded = true;
+
     // Set ready to true
-    this._ready = true;
+    this.ready = true;
 
     // Set the save variable for _onScreen
     this._onScreen = this._temp;
@@ -55,12 +73,12 @@ export class CarouselItemComponent implements OnInit {
    * not shown for the user, it should be hidden.
    */
   private shouldHide():boolean { return (this.first && !this.onScreen); }
-  private hasImage():string { return this.imageSrc === ''? 'none' : ''; }
+  private hasImage():boolean { return this.imageSrc !== ''; }
 
   public getOpacity(){ return this._opacity; }
   public hide(){ this._opacity = 0; }
   public show(){ this._opacity = 1; }
-  public isReady(){ return this._ready; }
+  public isReady(){ return this.ready; }
   public getWidth(){ return this.isReady()? this.elementRef.nativeElement.clientWidth : 0; }
 }
 

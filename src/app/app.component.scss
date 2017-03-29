@@ -1,13 +1,1 @@
-
-$information-phone: "only screen and (min-device-width: 375px) and (max-device-width: 667px) and (-webkit-min-device-pixel-ratio: 2)";
-
-.main-container {
-  margin: 0 auto;
-  width: 888px;
-  display: block;
-
-  @media #{$information-phone} {
-    width: auto;
-    margin: auto;
-  }
-}
+@import '../styles';

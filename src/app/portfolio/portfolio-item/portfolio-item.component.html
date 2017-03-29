@@ -4,6 +4,7 @@
     alt="{{logoAlt}}">
   <div class="title">{{title}}</div>
   <app-carousel #carousel
+                (onReady)="readySubject.next(null)"
                 [showImage]=isVisible()
                 class="carousel"
                 [carouselItemsData]=carouselItemsData></app-carousel>
@@ -12,3 +13,11 @@
    <div></div>
  </div>
 <div class="shadow" [style.opacity]="shadowOpacity"></div>
+ <div class="swipeTrigger"
+      [style.height]="isOpen()? '100%' : '0'"
+      (swipeleft)="onSwipeleft()"
+      (swiperight)="onSwiperight()"></div>
+
+ <!--
+ routerLink="/heroes" routerLinkActive="active"
+ -->

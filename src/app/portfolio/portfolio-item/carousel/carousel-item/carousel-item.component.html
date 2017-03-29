@@ -1,9 +1,30 @@
 <div class="intro-text"
      [style.textAlign]="textAlign">{{text}}</div>
-<img [ngClass]="{hide: shouldHide()}"
-     [style.display]="hasImage()"
-     (load)="onImageLoad()"
-     class="accessory"
-     src="{{imageSrc}}"
-     alt="{{imageAlt}}">
 
+
+<picture *ngIf="first" [style.display]="preloaded? 'none' : ''">
+
+  <!--[if IE 9]><video style="display: none;"><![endif]-->
+  <source srcset="{{imageSrc.replace('min', 'xmin').replace('png', 'webp')}}">
+  <!--[if IE 9]></video><![endif]-->
+
+  <img [ngClass]="{hide: shouldHide()}"
+       class="accessory blur"
+       srcset="{{imageSrc.replace('min', 'xmin')}}"
+       alt="{{imageAlt}}">
+</picture>
+
+<picture [style.display]="preloaded? '' : 'none'">
+
+  <!--[if IE 9]><video style="display: none;"><![endif]-->
+  <source srcset="{{imageSrc.replace('png', 'webp')}}">
+  <!--[if IE 9]></video><![endif]-->
+
+  <img
+      (load)="onImageLoad();"
+      [style.display]="hasImage()? '' : 'none'"
+      [ngClass]="{hide: shouldHide()}"
+      class="accessory"
+      srcset="{{imageSrc}}"
+      alt="{{imageAlt}}">
+</picture>

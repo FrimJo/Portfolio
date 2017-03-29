@@ -2,20 +2,27 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Angular2CliScss</title>
+  <title>Fredrik Portfolio</title>
   <base href="/">
 
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
 
-  <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/apple-touch-icon.png">
-  <link rel="icon" type="image/png" href="assets/icons/favicon-32x32.png" sizes="32x32">
-  <link rel="icon" type="image/png" href="assets/icons/favicon-16x16.png" sizes="16x16">
-  <link rel="manifest" href="assets/icons/manifest.json">
-  <link rel="mask-icon" href="assets/icons/safari-pinned-tab.svg" color="#ff0000">
-  <link rel="shortcut icon" href="assets/icons/favicon.ico">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400" rel="stylesheet">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/apple-touch-icon.png?v=XBrEG69nge">
+
+  <link rel="icon" type="image/png" href="assets/icons/favicon-32x32.png?v=XBrEG69nge" sizes="32x32">
+  <link rel="icon" type="image/png" href="assets/icons/favicon-16x16.png?v=XBrEG69nge" sizes="16x16">
+  <link rel="mask-icon" href="assets/icons/safari-pinned-tab.svg?v=XBrEG69nge" color="#5bbad5">
+  <meta name="theme-color" content="#434343">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+  <link rel="shortcut icon" href="assets/icons/favicon.ico?v=XBrEG69nge">
   <meta name="msapplication-config" content="/assets/icons/browserconfig.xml">
-  <meta name="theme-color" content="#ffffff">
-  <link rel="manifest" href="manifest.json">
+
+  <link rel="manifest" href="manifest.json?v=XBrEG69nge">
 
   <!--<link rel="preload" href="path/to/mystylesheet.css" as="style" onload="this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="path/to/mystylesheet.css"></noscript>-->
@@ -30,15 +37,82 @@
     !function(a){if(a.loadCSS){var b=loadCSS.relpreload={};if(b.support=function(){try{return a.document.createElement("link").relList.supports("preload")}catch(a){return!1}},b.poly=function(){for(var b=a.document.getElementsByTagName("link"),c=0;c<b.length;c++){var d=b[c];"preload"===d.rel&&"style"===d.getAttribute("as")&&(a.loadCSS(d.href,d,d.getAttribute("media")),d.rel=null)}},!b.support()){b.poly();var c=a.setInterval(b.poly,300);a.addEventListener&&a.addEventListener("load",function(){b.poly(),a.clearInterval(c)}),a.attachEvent&&a.attachEvent("onload",function(){a.clearInterval(c)})}}}(this);
   </script>
   -->
-  <style>/* critical css is inlined here */</style>
+  <style>/* critical css is inlined here */
+
+
+  html, body {
+    width: 100%;
+    height: 100%;
+  }
+
+  body {
+    background-color: #303030;
+    will-change: scroll-position;
+  }
+
+  .loading {
+    opacity: 0;
+    transition: opacity 800ms ease-in;
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background: #303030;
+    z-index: -1;
+  }
+
+  .loader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    display: none;
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: none;
+  }
+
+  app-root:empty + .loading {
+    opacity: 1;
+    z-index: 100;
+  }
+
+  app-root:empty + .loading > .loader {
+    display: inherit;
+    animation: spin 2s linear infinite;
+  }
+
+
+  @keyframes spin {
+    0% { transform: translate(-50%,-50%) rotate(0deg); }
+    100% { transform: translate(-50%,-50%) rotate(360deg); }
+  }
+
+  </style>
 
 </head>
 <body>
+<!--<div #preloaded class="preload">
+  <div class="title">DESIGNING</div>
+  <div class="sub-title">Experiences</div>
+  <div class="nav">
+    <div class="name">Fredrik Johansson</div>
+    <div class="quote">"blaha blaha"</div>
+  </div>
+</div>-->
+  <app-root></app-root>
 
-  <app-root>Loading...</app-root>
+  <div class="loading">
+    <div class="loader"></div>
+  </div>
 
   <!-- Service Worker Code -->
   <script>
+
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
         console.log('Service Worker registered');

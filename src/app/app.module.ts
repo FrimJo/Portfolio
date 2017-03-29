@@ -1,4 +1,4 @@
-import { BrowserModule } from '@angular/platform-browser';
+import {BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
@@ -8,6 +8,9 @@ import { PortfolioComponent } from './portfolio/portfolio.component';
 import { CarouselComponent } from './portfolio/portfolio-item/carousel/carousel.component';
 import { CarouselItemComponent } from './portfolio/portfolio-item/carousel/carousel-item/carousel-item.component';
 import { PortfolioItemComponent } from './portfolio/portfolio-item/portfolio-item.component';
+//import { AppRouting } from "./app.routing";
+import { PortfolioService } from "./portfolio/portfolio.service";
+
 
 @NgModule({
   declarations: [
@@ -20,9 +23,12 @@ import { PortfolioItemComponent } from './portfolio/portfolio-item/portfolio-ite
   imports: [
     BrowserModule,
     FormsModule,
-    HttpModule
+    HttpModule,
+    //AppRouting
   ],
-  providers: [],
+  providers: [
+    PortfolioService
+    ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

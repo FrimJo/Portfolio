@@ -12,6 +12,8 @@
 
 // Only deliver what you need
 
+$information-phone: "only screen and (max-device-width: 667px) and (-webkit-min-device-pixel-ratio: 2)";
+
 @font-face {
   font-family: 'SnellRoundhand-Regular';
   src: url('assets/fonts/SnellRoundhand-Regular.eot'); /* IE9 Compat Modes */
@@ -32,10 +34,6 @@
   url('assets/fonts/ShadowsIntoLight.otf') format('opentype');
 }
 
-@font-face {
-  font-family: 'Roboto-Thin';
-  src: url('assets/fonts/Roboto-Thin.ttf') format('truetype');
-}
 //@font-face { font-family: 'Roboto-Regular'; url('assets/fonts/Roboto-Black')  format('truetype') }
 
 //@import url('https://fonts.googleapis.com/css?family=Roboto:100,400');
@@ -43,18 +41,4 @@
 * {
   padding: 0;
   margin: 0;
-}
-
-html {
-
-}
-
-html, body {
-  width: 100%;
-  height: 100%;
-}
-
-body {
-  background-color: #303030;
-  will-change: scroll-position;
 }

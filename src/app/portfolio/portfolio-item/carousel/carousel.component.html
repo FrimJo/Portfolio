@@ -1,7 +1,9 @@
-<div class="carousel-container" [style.transform]="transform">
+<div class="carousel-container"
+     [style.transform]="transform">
    <app-carousel-item class="item" #carouselItemChild
     [style.opacity]="getOpacity(index)"
     *ngFor="let carouselItemData of carouselItemsData; let first = first; let index = index;"
+    (onReady)="childIsReady(item, first)"
     [imageSrc]=carouselItemData.imageSrc
     [imageAlt]=carouselItemData.imageAlt
     [textAlign]="first? '' : 'justify' "
@@ -20,10 +22,11 @@
   (click)="onRightArrowClick()"
   [style.opacity]="showRightArrow"><i class="arrow"></i></div>
 <div class="circle-container" [style.opacity]="showLeftArrow || showRightArrow">
-  <i class="circle"
-     [ngClass]="{'fill': isToFill(index), 'test': true}"
-     (click)="onCircleClick(index)"
-     *ngFor="let carouselItemData of carouselItemsData; let index = index;"></i>
+  <div class="circle-touch"
+       (click)="onCircleClick(index)"
+       *ngFor="let carouselItemData of carouselItemsData; let index = index;">
+    <i class="circle" [ngClass]="{'fill': isToFill(index), 'test': true}"></i>
+  </div>
 </div>
 
 

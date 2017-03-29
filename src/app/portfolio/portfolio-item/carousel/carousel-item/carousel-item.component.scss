@@ -1,11 +1,12 @@
-$information-phone: "only screen and (min-device-width: 375px) and (max-device-width: 667px) and (-webkit-min-device-pixel-ratio: 2)";
+@import '../../../../../styles';
 
 .intro-text {
   font-family: "Open Sans", serif;
   font-size: 14px;
+  line-height: 23px;
   font-style: normal;
   font-variant: normal;
-  font-weight: 100;
+  font-weight: 300;
   text-align: center;
   color: white;
   width: 70%;
@@ -27,6 +28,10 @@ $information-phone: "only screen and (min-device-width: 375px) and (max-device-w
   &.hide {
     transform: translate(0, 110%);
     opacity: 0;
+  }
+
+  &.blur {
+    filter: blur(20px);
   }
 
 }
