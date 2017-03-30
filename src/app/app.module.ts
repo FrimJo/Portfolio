@@ -11,13 +11,7 @@ import { PortfolioItemComponent } from './portfolio/portfolio-item/portfolio-ite
 import { AppRouting } from "./app.routing";
 import {UIRouterModule, Transition} from "ui-router-ng2";
 
-let redirect = {
-  name: 'redirect',
-  url: '',
-  redirectTo: '/home'
-}
-
-let project = { name: 'project', url: '/:title',  component: PortfolioComponent,
+let project = { name: 'project', url: ':title',  component: PortfolioComponent,
   resolve: [
     {
       token: 'activeComponent',
@@ -25,6 +19,8 @@ let project = { name: 'project', url: '/:title',  component: PortfolioComponent,
       resolveFn: (trans) => trans.params().title
     }
   ]};
+
+
 
 @NgModule({
   declarations: [
@@ -38,7 +34,7 @@ let project = { name: 'project', url: '/:title',  component: PortfolioComponent,
     BrowserModule,
     FormsModule,
     HttpModule,
-    UIRouterModule.forRoot({ states: [ redirect, project ], useHash: true })
+    UIRouterModule.forRoot({ states: [ project ], useHash: true })
   ],
   bootstrap: [AppComponent]
 })
