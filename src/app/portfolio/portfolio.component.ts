@@ -1,12 +1,12 @@
 import {
   Component, OnInit,
-  transition, ViewChildren, QueryList
+  transition, ViewChildren, QueryList, Input
 } from '@angular/core';
 import {PortfolioItemComponent} from "./portfolio-item/portfolio-item.component";
 import {setTimeout} from "timers";
 import {Router, ActivatedRoute} from "@angular/router";
 import 'rxjs/add/operator/switchMap';
-import {PortfolioService} from "./portfolio.service";
+import {StateService} from "ui-router-ng2";
 
 var ID = 0;
 
@@ -67,6 +67,33 @@ const CONTENTDATA: Object = {
     },
   ]};
 
+class ActiveService {
+
+  private activePortfolioItemComponent: PortfolioItemComponent;
+  public id = ID++;
+
+  setActiveComponent(component:PortfolioItemComponent){
+    if(component == null) throw 'cant set active component to null, use removeActiveComponent()';
+
+    this.activePortfolioItemComponent = component;
+  }
+
+  getActiveComponent(){
+    return this.activePortfolioItemComponent;
+  }
+
+  removeActiveComponent(){
+    this.activePortfolioItemComponent = null;
+  }
+
+  hasActiveComponent(){
+    return this.activePortfolioItemComponent != null;
+  }
+
+}
+
+const ACTIVESERVICE = new ActiveService();
+
 @Component({
   selector: 'app-portfolio',
   templateUrl: './portfolio.component.html',
@@ -77,6 +104,8 @@ const CONTENTDATA: Object = {
 export class PortfolioComponent implements OnInit {
 
   @ViewChildren('portfolioChild') portfolioItems: QueryList<PortfolioItemComponent>;
+
+  @Input() activeComponent:string;
   private tempElement = document.createElement('div');
   private tempTop;
   private tempHeight;
@@ -85,57 +114,67 @@ export class PortfolioComponent implements OnInit {
                 window.webkitRequestAnimationFrame;
 
   private scrollPosition = 0;
-  //private activeComponent = null;
+
   private id = ID++;
   private contentData = CONTENTDATA;
 
   private transitionEnd:(TransitionEvent, boolean)=>void = (event:TransitionEvent, force:boolean)=> {};
 
-  constructor(private route: ActivatedRoute, private router: Router, private portfolioService:PortfolioService) { }
+  constructor(private route: ActivatedRoute, private router: Router, private stateService:StateService) { }
 
   ngOnInit() {}
+
+  ngOnChanges() {}
 
   ngAfterViewInit() {
 
     // Init scroll position
     this.scrollPosition = window.pageYOffset;
 
-    let title = this.route.snapshot.data['title'];
+    this.onRouteParamChange();
+  }
+
+  onRouteParamChange() {
+
+    const title = this.activeComponent;
+    //const title = params['projectName'];
 
     // If there is a title, we open a new portfolio item
-    if(title) {
-
-      let component = this.portfolioItems.find((item: PortfolioItemComponent) => {return item.title === title;} );
-
+    if(title !== 'home') {
+      console.log('We have title');
+      let component = this.portfolioItems.find((item: PortfolioItemComponent) => {return item.title.toLowerCase().replace(' ', '-') === title;} );
+      console.log('Getting component');
       if(!component) return;
-
+      console.log('We have component, now is it ready?');
       // If the component is not ready,
       if(!component.isReady()) {
-
+        console.log('Component is not ready, wait for it to be ready');
         // Wait for ready
         component.readySubject.subscribe((nothing)=> {
-
+          console.log('Component is ready, toggle it');
           // Unsubscribe and continue
           component.readySubject.unsubscribe();
           this.toggelCard(component);
 
         });
       } else {
-
+        console.log('Component is ready, toggle it');
         this.toggelCard(component);
       }
-    } else {
-
-      // We are at the home screen
-      if(this.portfolioService.hasActiveComponent()) {
-
+    } else if(title === 'home') {
+      console.log('We are at the home screen, do we ahve active component?');
+      // We are at the home screen, see if we have an active component
+      if(ACTIVESERVICE.hasActiveComponent()) {
+        console.log('We have active component');
         // close card first
-        let tempComponent = this.portfolioService.getActiveComponent();
-
+        let tempComponent = ACTIVESERVICE.getActiveComponent();
+        console.log('Close active component');
         this.closeCard(tempComponent, ()=>{
 
+          console.log('After component closed');
+
           //After card has closed, open it again, to be able to play close animation
-//          this.openCard(tempComponent);
+          //this.raf(() => this.openCard(tempComponent, true));
 
         }, true);
       }
@@ -143,21 +182,24 @@ export class PortfolioComponent implements OnInit {
   }
 
   private cardClick(component:PortfolioItemComponent){
+    if(component.isOpen()) return;
 
-    let url = component.title.toLowerCase().replace(' ', '-');
-    this.router.navigate(['/' + url]);
+    console.log('cardClick');
+    let title = component.title.toLowerCase().replace(' ', '-');
+    this.stateService.go('project', {title: title});
   }
 
   private closeClick(component:PortfolioItemComponent){
-    this.router.navigate(['/home']);
+    console.log('closeClick');
+    this.stateService.go('project', {title: 'home'});
   }
 
   private toggelCard(component:PortfolioItemComponent) {
 
     // If there already is a card open, close it and wait for it to close
-    if(this.portfolioService.hasActiveComponent()) {
+    if(ACTIVESERVICE.hasActiveComponent()) {
 
-      this.closeCard(this.portfolioService.getActiveComponent(), () => {
+      this.closeCard(ACTIVESERVICE.getActiveComponent(), () => {
 
         // Scroll to right position
         window.scrollTo(window.pageXOffset, component.getTop());
@@ -179,17 +221,19 @@ export class PortfolioComponent implements OnInit {
     }
   }
 
-  private openCard(component:PortfolioItemComponent){
+  private openCard(component:PortfolioItemComponent, force:boolean = false){
 
     // If the we are not in mobile view or the component is not ready, or the component is already open, end function.
-    if(!PortfolioComponent.isMobileView() || !component.isReady() || component.isOpen()) return;
+    if(force && (!PortfolioComponent.isMobileView() || !component.isReady() || component.isOpen())) return;
 
     // Add component to active component
-    this.portfolioService.setActiveComponent(component);
+    ACTIVESERVICE.setActiveComponent(component);
 
     // Get card height and to, and save it for later use
     this.tempTop = component.getTop() - window.pageYOffset;
+    console.log('this.tempTop' + this.tempTop);
     this.tempHeight = component.getHeight();
+    console.log('this.tempHeight' + this.tempHeight);
 
     // Set height of temp element to card height
     this.tempElement.style.height = this.tempHeight + 'px';
@@ -199,7 +243,7 @@ export class PortfolioComponent implements OnInit {
 
     // Set styles
     element.style.cssText = 'position: fixed; top: '+this.tempTop+'px; height: '+this.tempHeight+'px; z-index: 100';
-
+    console.log(element.style.cssText);
     // Add temp element before card
     element.parentNode.insertBefore(this.tempElement, element);
 
@@ -234,7 +278,7 @@ export class PortfolioComponent implements OnInit {
     if(!force && !component.isOpen()) return;
 
     // Remove component from active component
-    this.portfolioService.removeActiveComponent();
+    ACTIVESERVICE.removeActiveComponent();
 
     // Scroll to original position
     if(window.pageYOffset != this.scrollPosition) window.scrollTo(window.pageXOffset, this.scrollPosition);

@@ -9,8 +9,22 @@ import { CarouselComponent } from './portfolio/portfolio-item/carousel/carousel.
 import { CarouselItemComponent } from './portfolio/portfolio-item/carousel/carousel-item/carousel-item.component';
 import { PortfolioItemComponent } from './portfolio/portfolio-item/portfolio-item.component';
 import { AppRouting } from "./app.routing";
-import { PortfolioService } from "./portfolio/portfolio.service";
+import {UIRouterModule, Transition} from "ui-router-ng2";
 
+let redirect = {
+  name: 'redirect',
+  url: '',
+  redirectTo: '/home'
+}
+
+let project = { name: 'project', url: '/:title',  component: PortfolioComponent,
+  resolve: [
+    {
+      token: 'activeComponent',
+      deps: [Transition],
+      resolveFn: (trans) => trans.params().title
+    }
+  ]};
 
 @NgModule({
   declarations: [
@@ -24,11 +38,8 @@ import { PortfolioService } from "./portfolio/portfolio.service";
     BrowserModule,
     FormsModule,
     HttpModule,
-    AppRouting
+    UIRouterModule.forRoot({ states: [ redirect, project ], useHash: true })
   ],
-  providers: [
-    PortfolioService
-    ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
