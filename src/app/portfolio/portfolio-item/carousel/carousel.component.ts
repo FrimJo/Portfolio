@@ -1,5 +1,5 @@
 import {
-  Component, OnInit, Input, ElementRef, ViewChild, HostListener, animate, QueryList,
+  Component, OnInit, Input, ElementRef, ViewChild, QueryList,
   ViewChildren, Output, EventEmitter
 } from '@angular/core';
 import {CarouselItemComponent} from "./carousel-item/carousel-item.component";
@@ -70,7 +70,7 @@ export class CarouselComponent implements OnInit {
 
   public isReady(){
 
-    return this.ready;// && this.firstCarouselItem.isReady();
+    return this.ready && this.firstCarouselItem.isReady();
   }
 
   public toggleArrows() {

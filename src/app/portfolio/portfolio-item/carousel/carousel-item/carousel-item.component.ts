@@ -1,4 +1,5 @@
 import {Component, OnInit, Input, ElementRef, Output, EventEmitter} from '@angular/core';
+import {Subject} from "rxjs";
 
 
 @Component({
@@ -17,9 +18,8 @@ export class CarouselItemComponent implements OnInit {
   @Input() private get onScreen() { return this._onScreen; }
   @Input() private textAlign:string;
 
-
-
   private preloaded = false;
+  public readySubject:Subject<any> = new Subject<any>();
 
   private set onScreen(value:boolean) {
 
@@ -66,6 +66,8 @@ export class CarouselItemComponent implements OnInit {
     // If the item is first in the carousel, show it
     if(this.first) this.show();
 
+    this.readySubject.next(null);
+
   }
 
   /*
@@ -81,11 +83,3 @@ export class CarouselItemComponent implements OnInit {
   public isReady(){ return this.ready; }
   public getWidth(){ return this.isReady()? this.elementRef.nativeElement.clientWidth : 0; }
 }
-
-/*
-
-  visible = false, except for first  => opacity
-  hidden = false, except first & !onScreen => class: hidden
-  onScreenAtInit <= from portfolio-item component at init
-
-*/

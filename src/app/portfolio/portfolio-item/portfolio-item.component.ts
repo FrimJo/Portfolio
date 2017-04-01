@@ -86,10 +86,64 @@ export class PortfolioItemComponent implements OnInit {
 
     // Get the scroll distance
     let wPageYOffset = window.pageYOffset;
-    let wOuterHeight = window.innerHeight;
-    let wDistance = wPageYOffset + wOuterHeight;
+    let wInnerHeight = window.innerHeight;
+    let wDistance = wPageYOffset + wInnerHeight;
 
     return wDistance >= cDistance;
+  }
+
+  private calculateCollapsedScale() {
+
+    const colapsed = this.elementRef.nativeElement.getBoundingClientRect();
+    const expanded = {width: window.outerWidth, height: window.outerHeight};
+
+    return {
+      x: colapsed.width / expanded.width,
+      y: colapsed.height / expanded.height
+    };
+  }
+
+  public createKeyframeAnimation():string {
+
+    // Figure out the size of the element when collapsed.
+    let {x, y} = this.calculateCollapsedScale();
+    let animation = '';
+    let inverseAnimation = '';
+
+    for (let step = 0; step <= 100; step++) {
+
+      // Remap the step value to an eased one.
+      let easedStep = this.ease(step / 100);
+
+      // Calculate the scale of the element.
+      const xScale = x + (1 - x) * easedStep;
+      const yScale = y + (1 - y) * easedStep;
+
+      animation += `${step}% {
+        transform: scale(${xScale}, ${yScale});
+      }`;
+
+      // And now the inverse for the contents.
+      const invXScale = 1 / xScale;
+      const invYScale = 1 / yScale;
+      inverseAnimation += `${step}% {
+        transform: scale(${invXScale}, ${invYScale});
+      }`;
+
+    }
+
+    return `
+    @keyframes menuAnimation {
+      ${animation}
+    }
+  
+    @keyframes menuContentsAnimation {
+      ${inverseAnimation}
+    }`;
+  }
+
+  private ease (v:number, pow:number=4): number{
+    return 1 - Math.pow(1 - v, pow);
   }
 
 }

@@ -4,9 +4,9 @@ import {
 } from '@angular/core';
 import {PortfolioItemComponent} from "./portfolio-item/portfolio-item.component";
 import {setTimeout} from "timers";
-import {Router, ActivatedRoute} from "@angular/router";
+import {Router, ActivatedRoute, NavigationEnd} from "@angular/router";
 import 'rxjs/add/operator/switchMap';
-import {StateService} from "ui-router-ng2";
+import {Subject} from "rxjs";
 
 var ID = 0;
 
@@ -105,7 +105,7 @@ export class PortfolioComponent implements OnInit {
 
   @ViewChildren('portfolioChild') portfolioItems: QueryList<PortfolioItemComponent>;
 
-  @Input() activeComponent:string;
+  //@Input() activeComponent:string;
   private tempElement = document.createElement('div');
   private tempTop;
   private tempHeight;
@@ -114,13 +114,23 @@ export class PortfolioComponent implements OnInit {
                 window.webkitRequestAnimationFrame;
 
   private scrollPosition = 0;
+  private ready = false;
+
+  private readySubject:Subject<any> = new Subject<any>();
 
   private id = ID++;
   private contentData = CONTENTDATA;
 
   private transitionEnd:(TransitionEvent, boolean)=>void = (event:TransitionEvent, force:boolean)=> {};
 
-  constructor(private route: ActivatedRoute, private router: Router, private stateService:StateService) { }
+  constructor(private route: ActivatedRoute, private router: Router) {
+
+    route.params.subscribe(params => {
+      let title = params['title'].toLowerCase().replace(' ','-');
+      this.onRouteParamChange(title);
+    });
+
+  }
 
   ngOnInit() {}
 
@@ -131,109 +141,92 @@ export class PortfolioComponent implements OnInit {
     // Init scroll position
     this.scrollPosition = window.pageYOffset;
 
-    this.onRouteParamChange();
+    // Announce ready
+    this.ready = true;
+    this.readySubject.next(null);
+
   }
 
-  onRouteParamChange() {
-
-    const title = this.activeComponent;
-    //const title = params['projectName'];
+  onRouteParamChange(title) {
 
     // If there is a title, we open a new portfolio item
-    if(title !== 'home') {
-      console.log('We have title');
-      let component = this.portfolioItems.find((item: PortfolioItemComponent) => {return item.title.toLowerCase().replace(' ', '-') === title;} );
-      console.log('Getting component');
-      if(!component) return;
-      console.log('We have component, now is it ready?');
-      // If the component is not ready,
-      if(!component.isReady()) {
-        console.log('Component is not ready, wait for it to be ready');
-        // Wait for ready
-        component.readySubject.subscribe((nothing)=> {
-          console.log('Component is ready, toggle it');
-          // Unsubscribe and continue
-          component.readySubject.unsubscribe();
-          this.toggelCard(component);
+    if(title) {
+
+      // If portfolio is not ready, wait for it
+      if (!this.ready) {
+
+        console.log('portfolio not ready');
+
+        // Subscribe for ready notification
+        this.readySubject.subscribe((nothing) => {
+
+          // Unsubscribe
+          this.readySubject.unsubscribe();
+
+          // Navigate without animate
+          this.navigateToTitle(title, false);
+
+          //TODO: Show all hidden images
 
         });
-      } else {
-        console.log('Component is ready, toggle it');
-        this.toggelCard(component);
+
+      } else {
+
+        // If portfolio is ready, navigate
+        this.navigateToTitle(title)
       }
-    } else if(title === 'home') {
-      console.log('We are at the home screen, do we ahve active component?');
-      // We are at the home screen, see if we have an active component
-      if(ACTIVESERVICE.hasActiveComponent()) {
-        console.log('We have active component');
-        // close card first
-        let tempComponent = ACTIVESERVICE.getActiveComponent();
-        console.log('Close active component');
-        this.closeCard(tempComponent, ()=>{
+    } else if(ACTIVESERVICE.hasActiveComponent()) {
 
-          console.log('After component closed');
+      // If we have an open card
+      this.closeCard(ACTIVESERVICE.getActiveComponent());
 
-          //After card has closed, open it again, to be able to play close animation
-          //this.raf(() => this.openCard(tempComponent, true));
-
-        }, true);
-      }
     }
   }
 
-  private cardClick(component:PortfolioItemComponent){
-    if(component.isOpen()) return;
+  public navigateToTitle(title:string, animate:boolean = true) {
 
-    console.log('cardClick');
-    let title = component.title.toLowerCase().replace(' ', '-');
-    this.stateService.go('project', {title: title});
-  }
+    // Get component based on title
+    let component = this.portfolioItems.find((item: PortfolioItemComponent) => {return item.title.toLowerCase().replace(' ', '-') === title;} );
 
-  private closeClick(component:PortfolioItemComponent){
-    console.log('closeClick');
-    this.stateService.go('project', {title: 'home'});
-  }
+    // If we can not find component, end function
+    if(!component) return;
 
-  private toggelCard(component:PortfolioItemComponent) {
+    // If the component is not ready,
+    if(!component.isReady()) {
 
-    // If there already is a card open, close it and wait for it to close
-    if(ACTIVESERVICE.hasActiveComponent()) {
+      console.log('component not ready');
 
-      this.closeCard(ACTIVESERVICE.getActiveComponent(), () => {
+      // Wait for ready
+      component.readySubject.subscribe((nothing)=> {
 
-        // Scroll to right position
-        window.scrollTo(window.pageXOffset, component.getTop());
+        console.log(component.createKeyframeAnimation());
 
-        // open sought card
-        this.openCard(component);
+        // Unsubscribe and continue
+        component.readySubject.unsubscribe();
 
-
+        this.openCard(component, animate);
       });
 
-      // Else open new card
     } else {
 
-      // Scroll to right position
-      // TODO: Add scroll for when typing url or using arrows to navigate browser
-      //window.scrollTo(window.pageXOffset, component.getTop());
-
-      this.openCard(component);
+      this.openCard(component, animate);
     }
   }
 
-  private openCard(component:PortfolioItemComponent, force:boolean = false){
+  private openCard(component:PortfolioItemComponent, animate:boolean = true){
+
+    console.log('animate' + animate);
 
     // If the we are not in mobile view or the component is not ready, or the component is already open, end function.
-    if(force && (!PortfolioComponent.isMobileView() || !component.isReady() || component.isOpen())) return;
+    if(!PortfolioComponent.isMobileView() || !component.isReady() || component.isOpen()) return;
 
     // Add component to active component
     ACTIVESERVICE.setActiveComponent(component);
 
     // Get card height and to, and save it for later use
     this.tempTop = component.getTop() - window.pageYOffset;
-    console.log('this.tempTop' + this.tempTop);
+
     this.tempHeight = component.getHeight();
-    console.log('this.tempHeight' + this.tempHeight);
 
     // Set height of temp element to card height
     this.tempElement.style.height = this.tempHeight + 'px';
@@ -243,7 +236,7 @@ export class PortfolioComponent implements OnInit {
 
     // Set styles
     element.style.cssText = 'position: fixed; top: '+this.tempTop+'px; height: '+this.tempHeight+'px; z-index: 100';
-    console.log(element.style.cssText);
+
     // Add temp element before card
     element.parentNode.insertBefore(this.tempElement, element);
 
@@ -259,8 +252,8 @@ export class PortfolioComponent implements OnInit {
       // Add shadow
       component.setHasShadow(true);
 
-      // Add transition property
-      element.classList.toggle('transition');
+      // Add transition property if animate is true
+      if(animate && !element.classList.contains('transition')) element.classList.add('transition')
 
       // Set styles to transition to
       element.style.top = '0';
@@ -272,10 +265,12 @@ export class PortfolioComponent implements OnInit {
     });
   }
 
-  private closeCard(component:PortfolioItemComponent, callback:()=>void, force:boolean = false){
+  private closeCard(component:PortfolioItemComponent, callback?:()=>void){
+
+    console.log('close card');
 
     // If the component is not open, end function
-    if(!force && !component.isOpen()) return;
+    if(!component.isOpen()) return;
 
     // Remove component from active component
     ACTIVESERVICE.removeActiveComponent();
@@ -288,8 +283,23 @@ export class PortfolioComponent implements OnInit {
 
     let element = component.getElementRef().nativeElement;
 
+    // if we dont have transition enabled
+    if(!element.classList.contains('transition')) {
+
+      this.tempTop = 50;
+
+      // Add transition for animate close
+      element.classList.add('transition');
+
+      // Set scrolltop to top of card
+      window.scrollTo(window.pageXOffset, this.tempElement.offsetTop - this.tempTop);
+
+    }
+
     // A function to run after transition ends
     this.transitionEnd = (event:TransitionEvent, force:boolean = false) => {
+
+      console.log('transitionEnd');
 
       // Do not trigger on wrong event, only event for component
       if(!force && event.srcElement != element) return;
@@ -304,7 +314,7 @@ export class PortfolioComponent implements OnInit {
       element.style.cssText = '';
 
       // Remove transitions
-      element.classList.toggle('transition');
+      if(element.classList.contains('transition')) element.classList.remove('transition');
 
       // Reset the overflow value for body
       window.document.body.style.overflow = '';
@@ -313,9 +323,6 @@ export class PortfolioComponent implements OnInit {
       if(callback) this.raf(()=>{ callback() });
 
     };
-
-    // Run the transitionend function if forced
-    if(force) this.transitionEnd(null, true);
 
     setTimeout(()=>{
 
@@ -326,11 +333,27 @@ export class PortfolioComponent implements OnInit {
 
     this.raf(()=>{
 
+      console.log('Apply styles to animate to');
+
       // Apply styles to animate to
       element.style.top = this.tempTop + 'px';
       element.style.height = this.tempHeight + 'px';
+
     });
 
+  }
+
+  private cardClick(component:PortfolioItemComponent){
+    if(component.isOpen()) return;
+
+    let title = component.title.toLowerCase().replace(' ', '-');
+
+    this.router.navigate(['home/', title]);
+  }
+
+  private closeClick(component:PortfolioItemComponent){
+
+    this.router.navigate(['home/']);
   }
 
   static isMobileView() {
@@ -348,4 +371,5 @@ export class PortfolioComponent implements OnInit {
     // Toggle arrows
     if(!PortfolioComponent.isMobileView()) component.toggleArrows();
   }
+
 }

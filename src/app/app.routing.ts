@@ -1,16 +1,12 @@
 import {RouterModule} from "@angular/router";
 import {PortfolioComponent} from "./portfolio/portfolio.component";
 const routes = [
-  { path: '', redirectTo: 'project/none', pathMatch: 'full' },
-  { path: 'project/:projectName', component: PortfolioComponent },
-  /*{ path: 'united-colors', data: {title: 'United Colors'}, component: PortfolioComponent },
-  { path: 'varramie', data: {title: 'Varramie'}, component: PortfolioComponent },
-  { path: 'upload', data: {title: 'UpLoad'}, component: PortfolioComponent },
-  { path: 'room-booking', data: {title: 'Room Booking'}, component: PortfolioComponent },
-  { path: 'holocare', data: {title: 'HoloCare'} ,component: PortfolioComponent },*/
-  { path: '**', redirectTo: 'home' }
+  { path: '', redirectTo: 'home/', pathMatch: 'full' },
+  { path: 'home', redirectTo: 'home/', pathMatch: 'full' },
+  { path: 'home/:title', component: PortfolioComponent },
+//  { path: '**', component: PortfolioComponent }
 ];
 
 export const AppRouting = RouterModule.forRoot(routes, {
-  useHash: true
+  useHash: false
 });
