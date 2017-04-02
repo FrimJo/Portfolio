@@ -73,6 +73,10 @@
   z-index: 10;
   opacity: 0;
 
+  @media #{$information-phone} {
+    bottom: 0;
+  }
+
   .circle-touch{
     width: 40px;
     height: 40px;
@@ -95,9 +99,5 @@
         transform: translate(-50%,-50%) scale(1.2, 1.2);
       }
     }
-  }
-
-  @media #{$information-phone} {
-    bottom: 44px;
   }
 }

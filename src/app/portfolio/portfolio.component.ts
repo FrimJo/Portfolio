@@ -199,8 +199,6 @@ export class PortfolioComponent implements OnInit {
       // Wait for ready
       component.readySubject.subscribe((nothing)=> {
 
-        console.log(component.createKeyframeAnimation());
-
         // Unsubscribe and continue
         component.readySubject.unsubscribe();
 
