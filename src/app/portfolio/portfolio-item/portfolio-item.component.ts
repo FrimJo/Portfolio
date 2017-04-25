@@ -1,10 +1,34 @@
 import {
-  Component, OnInit, Input, ElementRef, HostListener, ViewChild, Output, EventEmitter
+  Component, OnInit, Input, ElementRef, ViewChild, Output, EventEmitter
 } from '@angular/core';
 import {CarouselComponent} from "./carousel/carousel.component";
 import {PortfolioComponent} from "../portfolio.component";
 import {Subject} from "rxjs";
 
+class ReadyController {
+
+  private _ready = false;
+  private _subject:Subject<boolean> = new Subject<boolean>();
+  private _param = null;
+
+  private setReady(){
+    this._ready = true;
+    this._subject.next(this._param);
+  }
+
+  public isReady(){
+    return this._ready;
+  }
+
+  public onReady(next:(value:boolean)=>void){
+    this._subject.subscribe(next);
+  }
+
+  public whenReady(next:(value:boolean)=>void){
+    if(this._ready) next(this._param);
+    else this._subject.subscribe(next);
+  }
+}
 
 @Component({
   selector: 'app-portfolio-item',
@@ -32,9 +56,6 @@ export class PortfolioItemComponent implements OnInit {
   public readySubject:Subject<any> = new Subject<any>();
 
   constructor(private elementRef:ElementRef) { }
-
-  @HostListener("window:scroll", [])
-  onWindowScroll() {}
 
   ngOnInit() {}
 
@@ -90,21 +111,6 @@ export class PortfolioItemComponent implements OnInit {
     let wDistance = wPageYOffset + wInnerHeight;
 
     return wDistance >= cDistance;
-  }
-
-  private calculateCollapsedScale() {
-
-    const colapsed = this.elementRef.nativeElement.getBoundingClientRect();
-    const expanded = {width: window.outerWidth, height: window.outerHeight};
-
-    return {
-      x: colapsed.width / expanded.width,
-      y: colapsed.height / expanded.height
-    };
-  }
-
-  private ease (v:number, pow:number=4): number{
-    return 1 - Math.pow(1 - v, pow);
   }
 
 }

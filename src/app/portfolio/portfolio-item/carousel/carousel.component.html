@@ -3,10 +3,11 @@
    <app-carousel-item class="item" #carouselItemChild
     [style.opacity]="getOpacity(index)"
     *ngFor="let carouselItemData of carouselItemsData; let first = first; let index = index;"
-    (onReady)="childIsReady(item, first)"
+    (onReady)="childIsReady(carouselItemChild, first)"
     [imageSrc]=carouselItemData.imageSrc
     [imageAlt]=carouselItemData.imageAlt
     [textAlign]="first? '' : 'justify' "
+    [id]="index"
     [text]=carouselItemData.text
     [first]=first
     [onScreen]="showImage"></app-carousel-item>

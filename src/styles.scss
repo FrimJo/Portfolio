@@ -12,7 +12,10 @@
 
 // Only deliver what you need
 
+$small-screen: "only screen and (max-width: 684px)";
 $information-phone: "only screen and (max-device-width: 667px) and (-webkit-min-device-pixel-ratio: 2)";
+$not-information-phone: "not only screen and (max-device-width: 667px) and (-webkit-min-device-pixel-ratio: 2)";
+
 
 @font-face {
   font-family: 'SnellRoundhand-Regular';
@@ -41,4 +44,20 @@ $information-phone: "only screen and (max-device-width: 667px) and (-webkit-min-
 * {
   padding: 0;
   margin: 0;
+}
+
+app-portfolio {
+  display: block;
+  margin: 0 auto;
+  max-width: 888px;
+  padding-left: 20px;
+  padding-right: 20px;
+
+  @media #{$information-phone} {
+    display: inherit;
+    margin: 0 0;
+    max-width: initial;
+    padding-left: 0;
+    padding-right: 0;
+  }
 }

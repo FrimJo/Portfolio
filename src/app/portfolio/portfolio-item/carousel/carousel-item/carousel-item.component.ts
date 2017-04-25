@@ -1,4 +1,4 @@
-import {Component, OnInit, Input, ElementRef, Output, EventEmitter} from '@angular/core';
+import {Component, OnInit, Input, ElementRef, Output, EventEmitter, ViewChild} from '@angular/core';
 import {Subject} from "rxjs";
 
 
@@ -17,6 +17,9 @@ export class CarouselItemComponent implements OnInit {
   @Input() private first:boolean;
   @Input() private get onScreen() { return this._onScreen; }
   @Input() private textAlign:string;
+  @Input() public id:number;
+
+  @ViewChild('image') image:ElementRef;
 
   private preloaded = false;
   public readySubject:Subject<any> = new Subject<any>();
@@ -66,7 +69,7 @@ export class CarouselItemComponent implements OnInit {
     // If the item is first in the carousel, show it
     if(this.first) this.show();
 
-    this.readySubject.next(null);
+    //this.readySubject.next(null);
 
   }
 

@@ -1,12 +1,17 @@
 <div class="title">{{contentData.title}}</div>
 <div class="sub-title">{{contentData.subtitle}}</div>
+
+<!--<ul class="contacts"><li><a href=""><img class="social-media-icon" src="../../assets/icons/linked-in_ico.svg" alt="LinkedIn icon"></a></li
+><li><a href=""><img class="social-media-icon" src="../../assets/icons/github_ico.svg" alt="GitHub icon"></a></li
+><li><a href=""><img class="social-media-icon" src="../../assets/icons/mail_ico.svg" alt="Mail icon"></a></li></ul>-->
+
 <div class="nav">
   <div class="name">{{contentData.name}}</div>
   <div class="quote">{{contentData.quote}}</div>
 </div>
 <div class="main-container">
-  <ul class="portfolio-container">
-      <app-portfolio-item class="card" #portfolioChild *ngFor="let portfolioItemData of contentData.portfolioData;"
+  <ul class="portfolio-container"
+  ><app-portfolio-item class="card" #portfolioChild *ngFor="let portfolioItemData of contentData.portfolioData;"
                           (click)="cardClick(portfolioChild)"
                           (mouseover)="onMouseOver(portfolioChild)"
                           (mouseout)="onMouseOut(portfolioChild)"
@@ -16,5 +21,20 @@
                           [logoSrc]=portfolioItemData.logoSrc
                           [logoAlt]=portfolioItemData.logoAlt
                           [carouselItemsData]=portfolioItemData.carouselItemsData></app-portfolio-item>
+  <!--<div class="col"><img src="../../assets/icons/github_ico_trans.svg" alt=""></div
+  ><div class="col"><img src="../../assets/icons/linked-in_ico_trans.svg" alt=""></div
+  ><div class="col"><img src="../../assets/icons/mail_ico_trans.svg" alt=""></div>-->
+
   </ul>
+  <!--<div class="contact-container"
+      ><div class="col"><img src="../../assets/icons/github_ico_trans.svg" alt=""></div
+      ><div class="col"><img src="../../assets/icons/linked-in_ico_trans.svg" alt=""></div
+      ><div class="col"><img src="../../assets/icons/mail_ico_trans.svg" alt=""></div
+  ></div>-->
 </div>
+
+<div class="network"
+><a href="https://github.com/FrimJo"><div class="col"><img src="../../assets/icons/github_ico_trans.svg" alt=""></div></a
+  ><a href="https://www.linkedin.com/in/fredrik-johansson-08853458"><div class="col"><img src="../../assets/icons/linked-in_ico_trans.svg" alt=""></div></a
+  ><a href="mailto:frim85@gmail.com"><div class="col"><img src="../../assets/icons/mail_ico_trans.svg" alt=""></div></a
+></div>

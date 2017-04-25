@@ -1,6 +1,6 @@
 import {
   Component, OnInit,
-  transition, ViewChildren, QueryList, Input
+  transition, ViewChildren, QueryList, Input, HostListener
 } from '@angular/core';
 import {PortfolioItemComponent} from "./portfolio-item/portfolio-item.component";
 import {setTimeout} from "timers";
@@ -14,14 +14,14 @@ const CONTENTDATA: Object = {
   title: 'Designing',
   subtitle: 'Experiences',
   name: 'Fredrik Johansson',
-  quote: '" Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempo "',
+  quote: '“ Technique is ever-evolving, and so am I. ”',
   portfolioData: [{
     title: 'United Colors',
-    logoSrc: '../../assets/images/logo-empty-grey.min.svg',
+    logoSrc: '../../assets/images/icon_United Colors.png',
     logoAlt: '',
     carouselItemsData:[
-      { imageSrc: '../../assets/images/united-colors-play-store.min.png', imageAlt: '1A', text: 'Top-down colorful android arcade game. Unite dots of same color, avoid the rest.'},
-      { imageSrc: '../../assets/images/united-colors-in-game.min.png', imageAlt: '2A',
+      { imageSrc: '../../assets/images/united-colors-play-store.min.png', imageAlt: 'A GooglePixel phone with Google Playstore', text: 'Top-down colorful android arcade game. Unite dots of same color, avoid the rest.'},
+      { imageSrc: '../../assets/images/united-colors-in-game.min.png', imageAlt: 'A GooglePixel phone with the game United Colors',
         text: `With the use of a phones gyroscope, the player moves a big dot,
         trying to collide and consume smaller dots of same color for point\'s,
         and at the same time avoid colliding with dots of other colors, which would result in game over.
@@ -31,38 +31,63 @@ const CONTENTDATA: Object = {
   },
     {
       title: 'Varramie',
-      logoSrc: '../../assets/images/logo-empty-grey.min.svg',
+      logoSrc: '../../assets/images/icon_Varramie.png',
       logoAlt: '',
       carouselItemsData:[
-        { imageSrc: '../../assets/images/varramie.min.png', imageAlt: '1B', text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempo'},
-        { imageSrc: '../../assets/images/varramie.min.png', imageAlt: '2B', text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempo'}
+        { imageSrc: '../../assets/images/varramie.min.png', imageAlt: 'A GooglePixel phone with an android app',
+          text: `Android application tailored for a research project conducted at Umeå Institute of Design, Sweden.`
+        },
+        { imageSrc: '', imageAlt: '',
+          text: `The development progressed over a five week periode. It contained a MySQL database
+          to stach all the user behaviours, connected to a server which communicated
+          to the android clients which were using Google Liquid Fun physics engine and
+          Web GL ES for rendering the scene.`
+        }
       ]
     },
     {
       title: 'UpLoad',
-      logoSrc: '../../assets/images/logo-empty-grey.min.svg',
+      logoSrc: '../../assets/images/icon_upload.png',
       logoAlt: '',
       carouselItemsData:[
-        { imageSrc: '../../assets/images/placeholder-mockup-macbook-pro-silver.min.png', imageAlt: '1C', text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempo'},
-        { imageSrc: '../../assets/images/placeholder-mockup-macbook-pro-silver.min.png', imageAlt: '2C', text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempo'}
+        { imageSrc: '../../assets/images/upload.min.png', imageAlt: 'A computer show a web page UpLoad',
+          text: `A WordPress web page, with it\'s own theme and plugins.`
+        },
+        { imageSrc: '', imageAlt: '',
+          text: `This web page was developed over a period of five weeks in collaboration with Krux from Umeå.
+          Krux made the design and Fredrik together with a colleague implemented the desing.`
+        }
       ]
     },
     {
       title: 'Room Booking',
-      logoSrc: '../../assets/images/logo-empty-grey.min.svg',
+      logoSrc: '../../assets/images/icon_Room Booking.png',
       logoAlt: '',
       carouselItemsData:[
-        { imageSrc: '../../assets/images/dohio-ipad-white.min.png', imageAlt: '1D', text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempo'},
-        { imageSrc: '../../assets/images/dohio-ipad-white.min.png', imageAlt: '2D', text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempo'}
+        { imageSrc: '../../assets/images/dohio-ipad-white.min.png', imageAlt: 'An iPad showing a group room booking system.',
+          text: `A group room booking system which syncs to Office365.`
+        },
+        { imageSrc: '', imageAlt: '',
+          text: `The company Dohi was looking for a solution for their booking of group rooms. Fredrik with a team of
+          five designed and developed a system where the employees with a glance from afar could determine if the room
+          was occupied or not, and with only a few interactions, could book desired room.`
+        }
       ]
     },
     {
       title: 'HoloCare',
-      logoSrc: '../../assets/images/logo-empty-grey.min.svg',
+      logoSrc: '../../assets/images/icon_HoloCare.png',
       logoAlt: '',
       carouselItemsData:[
-        { imageSrc: '../../assets/images/hololens.min.png', imageAlt: '1E', text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempo'},
-        { imageSrc: '../../assets/images/hololens.min.png', imageAlt: '2E', text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempo'}
+        { imageSrc: '../../assets/images/hololens.min.png', imageAlt: 'A image of HoloLens.',
+          text: `A research project related to health care.`
+        },
+        { imageSrc: '', imageAlt: '',
+          text: `A new futuristic digital dentist clinic was about to emerge, and a demonstration of
+          what the future has to offer regarding augmented and mixed reality was sought. Fredrik in a team of five
+          did research through interviews with dentists and came upp with prototypes which was implemented in
+          HoloLens for presentation and demonstration purposes.`
+        }
       ]
     },
   ]};
@@ -98,7 +123,6 @@ const ACTIVESERVICE = new ActiveService();
   selector: 'app-portfolio',
   templateUrl: './portfolio.component.html',
   styleUrls: ['./portfolio.component.scss']
-  //changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class PortfolioComponent implements OnInit {
@@ -132,6 +156,9 @@ export class PortfolioComponent implements OnInit {
 
   }
 
+  @HostListener("window:scroll", [])
+  onWindowScroll() {}
+
   ngOnInit() {}
 
   ngOnChanges() {}
@@ -148,6 +175,14 @@ export class PortfolioComponent implements OnInit {
   }
 
   onRouteParamChange(title) {
+
+    // If we are not in mobile view and we have a title
+    if(!PortfolioComponent.isMobileView() && title) {
+      let component = this.getComponentFromTitle(title);
+
+      window.scrollTo(0, component.getTop());
+      return;
+    }
 
     // If there is a title, we open a new portfolio item
     if(title) {
@@ -183,10 +218,14 @@ export class PortfolioComponent implements OnInit {
     }
   }
 
+  private getComponentFromTitle(title:string):PortfolioItemComponent{
+    return this.portfolioItems.find((item: PortfolioItemComponent) => {return item.title.toLowerCase().replace(' ', '-') === title;} );
+  }
+
   public navigateToTitle(title:string, animate:boolean = true) {
 
     // Get component based on title
-    let component = this.portfolioItems.find((item: PortfolioItemComponent) => {return item.title.toLowerCase().replace(' ', '-') === title;} );
+    let component = this.getComponentFromTitle(title);
 
     // If we can not find component, end function
     if(!component) return;
@@ -342,7 +381,7 @@ export class PortfolioComponent implements OnInit {
   }
 
   private cardClick(component:PortfolioItemComponent){
-    if(component.isOpen()) return;
+    if(!PortfolioComponent.isMobileView() || component.isOpen()) return;
 
     let title = component.title.toLowerCase().replace(' ', '-');
 

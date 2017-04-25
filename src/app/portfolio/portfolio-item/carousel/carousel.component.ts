@@ -3,6 +3,7 @@ import {
   ViewChildren, Output, EventEmitter
 } from '@angular/core';
 import {CarouselItemComponent} from "./carousel-item/carousel-item.component";
+import {forEach} from "@angular/router/src/utils/collection";
 
 @Component({
   selector: 'app-carousel',
@@ -56,7 +57,9 @@ export class CarouselComponent implements OnInit {
     return 'translate(-' + this.width * this.index + 'px, 0)';
   }
 
-  private childIsReady(component:CarouselItemComponent, isFirst){
+  private childIsReady(carouselItem:CarouselItemComponent, isFirst:boolean){
+
+
     if(isFirst && this.ready) this.onReady.emit(null);
   }
 

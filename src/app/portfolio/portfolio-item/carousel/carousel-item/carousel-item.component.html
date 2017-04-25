@@ -5,19 +5,19 @@
 <picture *ngIf="first" [style.display]="preloaded? 'none' : ''">
 
   <!--[if IE 9]><video style="display: none;"><![endif]-->
-  <source srcset="{{imageSrc.replace('min', 'xmin').replace('png', 'webp')}}">
+  <!--<source srcset="{{imageSrc.replace('min', 'xmin').replace('png', 'webp')}}">-->
   <!--[if IE 9]></video><![endif]-->
 
   <img [ngClass]="{hide: shouldHide()}"
        class="accessory blur"
-       srcset="{{imageSrc.replace('min', 'xmin')}}"
+       src="{{imageSrc.replace('min', 'xmin')}}"
        alt="{{imageAlt}}">
 </picture>
 
-<picture [style.display]="preloaded? '' : 'none'">
+<picture #image [style.display]="preloaded? '' : 'none'">
 
   <!--[if IE 9]><video style="display: none;"><![endif]-->
-  <source srcset="{{imageSrc.replace('png', 'webp')}}">
+  <!--<source srcset="{{imageSrc.replace('png', 'webp')}}">-->
   <!--[if IE 9]></video><![endif]-->
 
   <img
@@ -25,6 +25,6 @@
       [style.display]="hasImage()? '' : 'none'"
       [ngClass]="{hide: shouldHide()}"
       class="accessory"
-      srcset="{{imageSrc}}"
+      src="{{imageSrc}}"
       alt="{{imageAlt}}">
 </picture>
