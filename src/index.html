@@ -71,12 +71,26 @@
 
   app-root:empty + .loading {
     opacity: 1;
-    z-index: 100;
+    z-index: 10;
   }
 
   app-root:empty + .loading > .loader {
     display: inherit;
     animation: spin 2s linear infinite;
+  }
+
+  .no-script {
+    position: absolute;
+    z-index: 15;
+    font-family: "Open Sans", sans-serif;
+    font-size: 26px;
+    line-height: 42px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 400;
+    text-align: center;
+    color: white;
+    width: 100%;
   }
 
 
@@ -97,6 +111,7 @@
     <div class="quote">"blaha blaha"</div>
   </div>
 </div>-->
+<noscript class="no-script">JavaScript is needed for this page to load.</noscript>
   <app-root></app-root>
 
   <div class="loading">
