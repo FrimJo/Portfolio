@@ -6,11 +6,9 @@ Using 'ng new angular-cli-scss -style=scss'
 
 It has working typescript translation, minification and g-zip as well as support for scss. And also, generates service-worker for offline use.
 
-Currently using Lighthouse ('https://developers.google.com/web/tools/lighthouse/') it receives a score of 82 our of 100.
+Currently using Google Lighthouse ('https://developers.google.com/web/tools/lighthouse/') it receives a score of 97 our of 100 (see lighthouse_report.html).
 
-What to do (se '/lighthouse_report.html'):
-- Use HTTPS/2 instead of HTTP
-- Avoids <link> that delay first paint (/styles.d41d8cd….bundle.css)
+Currently, firefox does not support WebP images. The code for using WebP images is commented out.
 
 
 ## Development server
@@ -28,16 +26,9 @@ Run 'npm run sw' to build service-worker.js file. This file will be stored in th
 
 Run 'npm run prod' to build for production build and automatic generate service-worker.js file.
 
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-Before running the tests make sure you are serving the app via `ng serve`.
 
 ## Running production build using live-server
+
 Install live-server using 'npm install -g live-server'.
 Run 'npm run static-serve' to start a live-server hosting the static files found in '/dev' on 'http://localhost:4300'. 
 
